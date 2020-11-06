@@ -1,0 +1,20 @@
+---
+title: "LOND_code"
+author: "Lathan Liou"
+date: "9/18/2020"
+output: 
+html_document:
+  self_contained: no
+---
+```{r, setup, include=FALSE}
+knitr::opts_knit$set(root.dir = '/Users/lathanliou/Desktop/Academic/Cambridge/BSU-job/onlineFDRShiny/man')
+```
+
+```{r help, echo=FALSE, include = FALSE}
+source("src/utils.R")
+library(knitr)
+library(onlineFDR)
+saved = help_console(LOND, "html", before = "", after = "")
+```
+ 
+`r paste(saved[-c(1:8)], collapse = " ")`
