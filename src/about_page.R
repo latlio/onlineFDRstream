@@ -39,6 +39,43 @@ fluidPage(
              footer = p("Feel free to email any questions or comments to", a("David", href= "mailto:david.robertson@mrc-bsu.cam.ac.uk/"))
            )
     ) #close column
+  ), #close fluidrow
+  fluidRow(
+    bsplus::bs_accordion(id = "guide") %>%
+      bs_set_opts(panel_type = "primary", use_heading_link = T) %>%
+      bs_append(title = "Package dependencies & credits", p(
+        "shinyWidgets",
+        br(),
+        "shinycssloaders",
+        br(),
+        "shinyjs",
+        br(),
+        "shinyBS",
+        br(),
+        "bsplus",
+        br(),
+        "shinyFeedback",
+        br(),
+        "shinydashboard",
+        br(),
+        "shinydashboardPlus",
+        br(),
+        "tippy",
+        br(),
+        "waiter",
+        br(),
+        "sever",
+        br(),
+        br(),
+        "tidyverse",
+        br(),
+        "plotly",
+        br(),
+        "lubridate",
+        br(),
+        "knitr",
+        style = "font-family: 'Consolas'"))
   ) #close fluidrow
 ) # close fluidpage
+
 
