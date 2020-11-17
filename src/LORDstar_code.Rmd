@@ -8,11 +8,11 @@ html_document:
 ---
 
 ```{r, setup, include=FALSE}
-knitr::opts_knit$set(root.dir = '/Users/lathanliou/Desktop/Academic/Cambridge/BSU-job/onlineFDRShiny/man')
+# knitr::opts_knit$set(root.dir = '/Users/lathanliou/Desktop/Academic/Cambridge/BSU-job/onlineFDRShiny/man')
 ```
 
 ```{r help, echo=FALSE, include = FALSE}
-source("src/utils.R")
+source("utils.R")
 library(knitr)
 library(onlineFDR)
 saved = help_console(LORDstar, "html", before = "", after = "")

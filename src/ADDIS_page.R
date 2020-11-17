@@ -41,9 +41,10 @@ border-top-color:#ffffff;
                   shiny::tabPanel("Plot",
                                   placeholder2UI("inputADDIS"),
                                   plotUI("ADDISplot")),
-                  shiny::tabPanel("Compare"),
-                  shiny::tabPanel("Code", withMathJax(),
-                                  HTML(markdown::markdownToHTML(knit("./src/ADDIS_code.Rmd", quiet = T))))
+                  shiny::tabPanel("Compare",
+                                  compareUI("ADDIScomp")),
+                  shiny::tabPanel("Help", withMathJax(),
+                                  HTML(markdown::markdownToHTML(knit("src/ADDIS_code.Rmd", quiet = T))))
                 ) ## close tabset panel
                 
   ) ## close column
