@@ -1,5 +1,5 @@
 ################################################################################
-# A Shiny App using the onlineFDR package
+# A Shiny App using the onlineFDR package: Stream
 #
 # Author: Lathan Liou
 # Created: Fri Sep 18 09:58:34 2020 ------------------------------
