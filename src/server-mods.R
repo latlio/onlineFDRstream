@@ -24,6 +24,10 @@ is.empty <- function(x) {
   return(length(x)==0)
 }
 
+set_html_breaks <- function(n) {
+  HTML(strrep(br(), n))
+}
+
 LONDServer <- function(input, output, session, data) {
   ns <- session$ns
   

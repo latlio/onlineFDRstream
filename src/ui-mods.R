@@ -94,6 +94,8 @@ LONDUI <- function(id) {
   ns <- NS(id)
   
   tagList(
+    useShinyFeedback(),
+    useShinyjs(),
     fileInput(ns("paramfile"), "Please upload a CSV file of your parameters",
               multiple = FALSE,
               accept = c('text/csv', 
@@ -104,15 +106,6 @@ LONDUI <- function(id) {
       label = "Calculate", 
       style = "fill",
       color = "success"
-    ),
-    br(),
-    br(),
-    shinyWidgets::downloadBttn(
-      outputId = ns("download"),
-      label = "Download results",
-      style = "fill",
-      color = "primary",
-      size = "sm"
     )
   )
 }
@@ -121,6 +114,8 @@ LORDUI <- function(id) {
   ns <- NS(id)
   
   tagList(
+    useShinyFeedback(),
+    useShinyjs(),
     fileInput(ns("paramfile"), "Please upload a CSV file of your parameters",
               multiple = FALSE,
               accept = c('text/csv', 
@@ -131,15 +126,6 @@ LORDUI <- function(id) {
       label = "Calculate", 
       style = "fill",
       color = "success"
-    ),
-    br(),
-    br(),
-    shinyWidgets::downloadBttn(
-      outputId = ns("download"),
-      label = "Download results",
-      style = "fill",
-      color = "primary",
-      size = "sm"
     )
   )
 }
@@ -148,6 +134,8 @@ SAFFRONUI <- function(id) {
   ns <- NS(id)
   
   tagList(
+    useShinyFeedback(),
+    useShinyjs(),
     fileInput(ns("paramfile"), "Please upload a CSV file of your parameters",
               multiple = FALSE,
               accept = c('text/csv', 
@@ -158,15 +146,6 @@ SAFFRONUI <- function(id) {
       label = "Calculate", 
       style = "fill",
       color = "success"
-    ),
-    br(),
-    br(),
-    shinyWidgets::downloadBttn(
-      outputId = ns("download"),
-      label = "Download results",
-      style = "fill",
-      color = "primary",
-      size = "sm"
     )
   )
 }
@@ -175,6 +154,8 @@ ADDISUI <- function(id) {
   ns <- NS(id)
   
   tagList(
+    useShinyFeedback(),
+    useShinyjs(),
     fileInput(ns("paramfile"), "Please upload a CSV file of your parameters",
               multiple = FALSE,
               accept = c('text/csv', 
@@ -185,15 +166,6 @@ ADDISUI <- function(id) {
       label = "Calculate", 
       style = "fill",
       color = "success"
-    ),
-    br(),
-    br(),
-    shinyWidgets::downloadBttn(
-      outputId = ns("download"),
-      label = "Download results",
-      style = "fill",
-      color = "primary",
-      size = "sm"
     )
   )
 }
@@ -202,6 +174,8 @@ alphainvestingUI <- function(id) {
   ns <- NS(id)
   
   tagList(
+    useShinyFeedback(),
+    useShinyjs(),
     fileInput(ns("paramfile"), "Please upload a CSV file of your parameters",
               multiple = FALSE,
               accept = c('text/csv', 
@@ -212,15 +186,6 @@ alphainvestingUI <- function(id) {
       label = "Calculate", 
       style = "fill",
       color = "success"
-    ),
-    br(),
-    br(),
-    shinyWidgets::downloadBttn(
-      outputId = ns("download"),
-      label = "Download results",
-      style = "fill",
-      color = "primary",
-      size = "sm"
     )
   )
 }
@@ -229,6 +194,8 @@ LONDSTARUI <- function(id) {
   ns <- NS(id)
   
   tagList(
+    useShinyFeedback(),
+    useShinyjs(),
     fileInput(ns("paramfile"), "Please upload a CSV file of your parameters",
               multiple = FALSE,
               accept = c('text/csv', 
@@ -239,15 +206,6 @@ LONDSTARUI <- function(id) {
       label = "Calculate", 
       style = "fill",
       color = "success"
-    ),
-    br(),
-    br(),
-    shinyWidgets::downloadBttn(
-      outputId = ns("download"),
-      label = "Download results",
-      style = "fill",
-      color = "primary",
-      size = "sm"
     )
   )
 }
@@ -256,6 +214,8 @@ LORDSTARUI <- function(id) {
   ns <- NS(id)
   
   tagList(
+    useShinyFeedback(),
+    useShinyjs(),
     fileInput(ns("paramfile"), "Please upload a CSV file of your parameters",
               multiple = FALSE,
               accept = c('text/csv', 
@@ -266,15 +226,6 @@ LORDSTARUI <- function(id) {
       label = "Calculate", 
       style = "fill",
       color = "success"
-    ),
-    br(),
-    br(),
-    shinyWidgets::downloadBttn(
-      outputId = ns("download"),
-      label = "Download results",
-      style = "fill",
-      color = "primary",
-      size = "sm"
     )
   )
 }
@@ -283,6 +234,8 @@ SAFFRONSTARUI <- function(id) {
   ns <- NS(id)
   
   tagList(
+    useShinyFeedback(),
+    useShinyjs(),
     fileInput(ns("paramfile"), "Please upload a CSV file of your parameters",
               multiple = FALSE,
               accept = c('text/csv', 
@@ -293,15 +246,6 @@ SAFFRONSTARUI <- function(id) {
       label = "Calculate", 
       style = "fill",
       color = "success"
-    ),
-    br(),
-    br(),
-    shinyWidgets::downloadBttn(
-      outputId = ns("download"),
-      label = "Download results",
-      style = "fill",
-      color = "primary",
-      size = "sm"
     )
   )
 }
@@ -315,7 +259,42 @@ tableUI <- function(id) {
 
 summaryUI <- function(id) {
   ns <- NS(id)
-  uiOutput(ns("count"))
+  tagList(
+    useShinyjs(),
+    # shinyanimate::withAnim(),
+    shinyjs::hidden(
+      div(
+        id = ns("downloadbutton"),
+        uiOutput(ns("count"))
+      ) #close div
+    )
+  )
+}
+
+compareUI <- function(id) {
+  ns <- NS(id)
+  
+  tagList(
+    br(),
+    p("Make sure you already clicked Calculate. Clicking the 'Compare' button compares the results of two algorithms. Parameters for the selected algorithm are assumed to be same as those for the current algorithm, otherwise they are set to the default values (see Help)."),
+    column(width = 12,
+           align = "center",
+           div(style = "display: inline-block;vertical-align:top;text-align:center",
+               strong("Pick an algorithm for comparison"),
+               shiny::selectInput(ns("alg"), NULL, c("LOND", "LORD", "LORD3", "LORDdiscard", "LORDdep", "SAFFRON", "ADDIS")))),
+    shinyWidgets::actionBttn(
+      inputId = ns("compare"),
+      label = "Compare",
+      style = "fill",
+      color = "primary"
+    ),
+    br(),
+    plotlyOutput(ns("comp")) %>%
+      shinycssloaders::withSpinner(type = 6,
+                                   color = "#0066CC"),
+    br(),
+    uiOutput(ns("compnum"))
+  ) #close taglist
 }
 
 plotUI <- function(id) {
