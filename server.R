@@ -44,6 +44,8 @@ with_tooltip <- function(value, tooltip, ...) {
       tippy(value, tooltip, ...))
 }
 
+`%!in%` = Negate(`%in%`)
+
 server <- function(input, output, session) {
   sever()
   Sys.sleep(0.5)
@@ -65,6 +67,21 @@ server <- function(input, output, session) {
     
     data <- read_csv(input$file$datapath) %>%
       dplyr::mutate(across(any_of("date"), ~as.Date(.x, format = "%m/%d/%y")))
+  })
+  
+  #warning if wrong file type
+  observeEvent(input$file, {
+    ext <- tools::file_ext(input$file$name)
+    if (ext %!in% c(
+      'text/csv',
+      'text/comma-separated-values',
+      'text/tab-separated-values',
+      'text/plain',
+      'csv',
+      'tsv')) {
+      shiny::showNotification("Your file format is not supported. Please upload a CSV file!", type = "err", 
+                              duration = NULL)
+    }
   })
   
   #### LOND ####
