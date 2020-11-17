@@ -41,5 +41,5 @@ library(onlineFDR)
 source("ui.R")
 source("server.R")
 
-runApp(shinyApp(ui, server), launch.browser = TRUE)
+# runApp(shinyApp(ui, server), launch.browser = TRUE)
 
