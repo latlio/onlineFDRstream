@@ -78,9 +78,6 @@ LONDServer <- function(input, output, session, data) {
     if(!is.null(data())){
       shiny::showModal(modalDialog("Calculating..."))
     }
-    else {
-      shiny::showNotification("Please upload a dataset")
-    }
     out <- LOND(d = data(),
                 alpha = alpha,
                 random = random,
@@ -95,26 +92,34 @@ LONDServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else {
+    } else if(input$go > 0 && !is.data.frame(data)) {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
+    } 
+    else {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
     }
   })
   
+  # output no data loaded error message
+  observeEvent(input$go, {
+    if(!is.data.frame(data)) {
+      shiny::showNotification("Please upload a dataset first!", type = "err")
+    }
+  })
   # Output error messages
-  observeEvent(input$go,
-               if(is.null(data())){
-                 shiny::showNotification("Please upload a dataset", type = "err")
-               }
-               else {
-                 tryCatch({
-                   LONDres()
-                 },
-                 error = function(err){
-                   shiny::showNotification(paste0(err), type = "err")
-                 })
-               }
-  )
+  observeEvent(input$go, {
+    if(!is.null(data())){
+      tryCatch({
+        LONDres()
+      },
+      error = function(err){
+        shiny::showNotification(paste0(err), type = "err")
+      })
+    }
+  })
+  
   return(list(LONDres = LONDres))
 }
 
@@ -404,26 +409,33 @@ LORDServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else {
+    } else if(input$go > 0 && !is.data.frame(data)) {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
+    } 
+    else {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
     }
   })
   
+  # output no data loaded error message
+  observeEvent(input$go, {
+    if(!is.data.frame(data)) {
+      shiny::showNotification("Please upload a dataset first!", type = "err")
+    }
+  })
   # Output error messages
-  observeEvent(input$go,
-               if(is.null(data())){
-                 shiny::showNotification("Please upload a dataset", type = "err")
-               }
-               else {
-                 tryCatch({
-                   LORDres()
-                 },
-                 error = function(err){
-                   shiny::showNotification(paste0(err), type = "err")
-                 })
-               }
-  )
+  observeEvent(input$go, {
+    if(!is.null(data())){
+      tryCatch({
+        LONDres()
+      },
+      error = function(err){
+        shiny::showNotification(paste0(err), type = "err")
+      })
+    }
+  })
   
   return(list(LORDres = LORDres))
 }
@@ -707,26 +719,33 @@ SAFFRONServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else {
+    } else if(input$go > 0 && !is.data.frame(data)) {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
+    } 
+    else {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
     }
   })
   
-  #output error messages
-  observeEvent(input$go,
-               if(is.null(data())){
-                 shiny::showNotification("Please upload a dataset", type = "err")
-               }
-               else {
-                 tryCatch({
-                   SAFFRONres()
-                 },
-                 error = function(err){
-                   shiny::showNotification(paste0(err), type = "err")
-                 })
-               }
-  )
+  # output no data loaded error message
+  observeEvent(input$go, {
+    if(!is.data.frame(data)) {
+      shiny::showNotification("Please upload a dataset first!", type = "err")
+    }
+  })
+  # Output error messages
+  observeEvent(input$go, {
+    if(!is.null(data())){
+      tryCatch({
+        LONDres()
+      },
+      error = function(err){
+        shiny::showNotification(paste0(err), type = "err")
+      })
+    }
+  })
   
   return(list(SAFFRONres = SAFFRONres))
 }
@@ -998,26 +1017,33 @@ ADDISServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else {
+    } else if(input$go > 0 && !is.data.frame(data)) {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
+    } 
+    else {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
     }
   })
   
-  #output error messages
-  observeEvent(input$go,
-               if(is.null(data())){
-                 shiny::showNotification("Please upload a dataset", type = "err")
-               }
-               else {
-                 tryCatch({
-                   ADDISres()
-                 },
-                 error = function(err){
-                   shiny::showNotification(paste0(err), type = "err")
-                 })
-               }
-  )
+  # output no data loaded error message
+  observeEvent(input$go, {
+    if(!is.data.frame(data)) {
+      shiny::showNotification("Please upload a dataset first!", type = "err")
+    }
+  })
+  # Output error messages
+  observeEvent(input$go, {
+    if(!is.null(data())){
+      tryCatch({
+        LONDres()
+      },
+      error = function(err){
+        shiny::showNotification(paste0(err), type = "err")
+      })
+    }
+  })
   
   return(list(ADDISres = ADDISres))
 }
@@ -1287,26 +1313,33 @@ ADDISaServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else {
+    } else if(input$go > 0 && !is.data.frame(data)) {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
+    } 
+    else {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
     }
   })
   
-  #output error messages
-  observeEvent(input$go,
-               if(is.null(data())){
-                 shiny::showNotification("Please upload a dataset", type = "err")
-               }
-               else {
-                 tryCatch({
-                   ADDISres()
-                 },
-                 error = function(err){
-                   shiny::showNotification(paste0(err), type = "err")
-                 })
-               }
-  )
+  # output no data loaded error message
+  observeEvent(input$go, {
+    if(!is.data.frame(data)) {
+      shiny::showNotification("Please upload a dataset first!", type = "err")
+    }
+  })
+  # Output error messages
+  observeEvent(input$go, {
+    if(!is.null(data())){
+      tryCatch({
+        LONDres()
+      },
+      error = function(err){
+        shiny::showNotification(paste0(err), type = "err")
+      })
+    }
+  })
   
   return(list(ADDISres = ADDISres))
 }
@@ -1368,26 +1401,33 @@ alphainvestingServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else {
+    } else if(input$go > 0 && !is.data.frame(data)) {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
+    } 
+    else {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
     }
   })
   
-  #output error messages
-  observeEvent(input$go,
-               if(is.null(data())){
-                 shiny::showNotification("Please upload a dataset", type = "err")
-               }
-               else {
-                 tryCatch({
-                   alphainvestingres()
-                 },
-                 error = function(err){
-                   shiny::showNotification(paste0(err), type = "err")
-                 })
-               }
-  )
+  # output no data loaded error message
+  observeEvent(input$go, {
+    if(!is.data.frame(data)) {
+      shiny::showNotification("Please upload a dataset first!", type = "err")
+    }
+  })
+  # Output error messages
+  observeEvent(input$go, {
+    if(!is.null(data())){
+      tryCatch({
+        LONDres()
+      },
+      error = function(err){
+        shiny::showNotification(paste0(err), type = "err")
+      })
+    }
+  })
   
   return(list(alphainvestingres = alphainvestingres))
 }
@@ -1642,29 +1682,33 @@ LONDSTARServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else {
+    } else if(input$go > 0 && !is.data.frame(data)) {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
+    } 
+    else {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
     }
   })
   
-  #output error messages
-  observeEvent(input$go,
-               if(is.null(data())){
-                 shiny::showNotification("Please upload a dataset", type = "err")
-               }
-               else {
-                 tryCatch(
-                   LONDSTARres(),
-                   # warning = function(warn){
-                   #   shiny::showNotification(paste0(warn), type = "warning")
-                   # },
-                   error = function(err){
-                     shiny::showNotification(paste0(err), type = "err")
-                   }
-                   )
-               }
-  )
+  # output no data loaded error message
+  observeEvent(input$go, {
+    if(!is.data.frame(data)) {
+      shiny::showNotification("Please upload a dataset first!", type = "err")
+    }
+  })
+  # Output error messages
+  observeEvent(input$go, {
+    if(!is.null(data())){
+      tryCatch({
+        LONDres()
+      },
+      error = function(err){
+        shiny::showNotification(paste0(err), type = "err")
+      })
+    }
+  })
   
   return(list(LONDSTARres = LONDSTARres))
 }
@@ -1867,29 +1911,33 @@ LORDSTARServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else {
+    } else if(input$go > 0 && !is.data.frame(data)) {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
+    } 
+    else {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
     }
   })
   
-  #output error messages
-  observeEvent(input$go,
-               if(is.null(data())){
-                 shiny::showNotification("Please upload a dataset", type = "err")
-               }
-               else {
-                 tryCatch(
-                   LORDSTARres(),
-                   # warning = function(warn){
-                   #   shiny::showNotification(paste0(warn), type = "warning")
-                   # },
-                   error = function(err){
-                     shiny::showNotification(paste0(err), type = "err")
-                   }
-                 )
-               }
-  )
+  # output no data loaded error message
+  observeEvent(input$go, {
+    if(!is.data.frame(data)) {
+      shiny::showNotification("Please upload a dataset first!", type = "err")
+    }
+  })
+  # Output error messages
+  observeEvent(input$go, {
+    if(!is.null(data())){
+      tryCatch({
+        LONDres()
+      },
+      error = function(err){
+        shiny::showNotification(paste0(err), type = "err")
+      })
+    }
+  })
   
   return(list(LORDSTARres = LORDSTARres))
 }
@@ -2114,29 +2162,33 @@ SAFFRONSTARServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else {
+    } else if(input$go > 0 && !is.data.frame(data)) {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
+    } 
+    else {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
     }
   })
   
-  #output error messages
-  observeEvent(input$go,
-               if(is.null(data())){
-                 shiny::showNotification("Please upload a dataset", type = "err")
-               }
-               else {
-                 tryCatch(
-                   SAFFRONSTARres(),
-                   # warning = function(warn){
-                   #   shiny::showNotification(paste0(warn), type = "warning")
-                   # },
-                   error = function(err){
-                     shiny::showNotification(paste0(err), type = "err")
-                   }
-                 )
-               }
-  )
+  # output no data loaded error message
+  observeEvent(input$go, {
+    if(!is.data.frame(data)) {
+      shiny::showNotification("Please upload a dataset first!", type = "err")
+    }
+  })
+  # Output error messages
+  observeEvent(input$go, {
+    if(!is.null(data())){
+      tryCatch({
+        LONDres()
+      },
+      error = function(err){
+        shiny::showNotification(paste0(err), type = "err")
+      })
+    }
+  })
   
   return(list(SAFFRONSTARres = SAFFRONSTARres))
 }
