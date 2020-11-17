@@ -35,7 +35,7 @@ library(lubridate)
 
 #make sure github dev version is installed
 # devtools::install_github("https://github.com/dsrobertson/onlineFDR")
-library(StanHeaders)
+# library(StanHeaders)
 library(onlineFDR)
 
 source("ui.R")

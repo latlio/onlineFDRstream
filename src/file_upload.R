@@ -11,7 +11,7 @@ fluidPage(
       bs_set_opts(panel_type = "primary", use_heading_link = T) %>%
       bs_append(title = "Introduction", content = HTML("This application is designed to allow users to interactively run procedures that control the False Discovery Rate (FDR) for online hypothesis testing. Source code and additional information for this application are available via <a href=\"https://github.com/dsrobertson/onlineFDRGitHub\">GitHub</a>.")) %>%
       bs_append(title = "Application usage", content = p(
-        a(href = "https://github.com/latlio/onlineFDRstream/blob/master/www/user-diagram.png", "View user diagram"),
+        img(src = "user-diagram.png"),
         br(),
         "For more information, check out the", a(href = "https://dsrobertson.github.io/onlineFDR/articles/onlineFDR.html", "Get Started"), "page in our vignette."))  %>%
       bs_append(title = "Help & feedback", content = HTML("For additional help or to submit feedback or bug reports,
