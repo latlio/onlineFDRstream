@@ -33,7 +33,6 @@ library(lubridate)
 
 #make sure github dev version is installed
 # devtools::install_github("https://github.com/dsrobertson/onlineFDR")
-library(StanHeaders)
 library(onlineFDR)
 
 ui <- shiny::fluidPage(
@@ -46,7 +45,7 @@ ui <- shiny::fluidPage(
     waiter::use_waiter(),
     sever::use_sever(),
     waiter::waiter_show_on_load(html = tagList(waiter::spin_fading_circles(),
-                                               "Initializing onlineFDRExplore")),
+                                               "Initializing onlineFDRStream")),
     tags$head(
       tags$script(src = "src/JSModule.js"),
       tags$style(HTML("
@@ -59,7 +58,7 @@ ui <- shiny::fluidPage(
                  ".p {font-family: Lato;}")
     ),
     ####make the navbar pages####
-    shiny::navbarPage(HTML(paste0("onlineFDR", tags$sub("explore"))),
+    shiny::navbarPage(HTML(paste0("onlineFDR", tags$sub("stream"))),
                       shiny::tabPanel("Get Started",
                                       source("src/file_upload.R")$value),
                       shiny::navbarMenu("Synchronous",
