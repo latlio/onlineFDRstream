@@ -36,7 +36,8 @@ library(lubridate)
 library(onlineFDR)
 
 #for alg recommendation feature
-demodata <- read_csv("powerFDRdata.csv")
+demodata <- read_csv("powerFDRdata.csv") %>%
+  mutate(pi.vec = round(pi.vec, 2))
 
 #for hover functionality
 with_tooltip <- function(value, tooltip, ...) {

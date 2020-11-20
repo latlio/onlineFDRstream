@@ -8,6 +8,9 @@
 #clear before deplyment
 rm(list = ls())
 
+#change file input
+options(shiny.maxRequestSize = 30*1024^2)
+
 # 1. Shiny ----
 library(shiny)
 library(shinyWidgets) #custom widgets, allows for shinydashboard elements
