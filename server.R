@@ -90,14 +90,12 @@ server <- function(input, output, session) {
   LOND_result <- callModule(LONDServer, id = "inputLOND", data = in_data)
   callModule(LONDcountServer, "LONDcount", LOND_result)
   callModule(LONDplotServer, "LONDplot", LOND_result)
-  callModule(LONDcompServer, "LONDcomp", LOND_result, data = in_data)
   
   #### LORD ####
   
   LORD_result <- callModule(LORDServer, id = "inputLORD", data = in_data)
   callModule(LORDcountServer, "LORDcount", LORD_result)
   callModule(LORDplotServer, "LORDplot", LORD_result)
-  callModule(LORDcompServer, "LORDcomp", LORD_result, data = in_data)
   
   # gray out inputs conditionally
   shinyjs::onclick("advanced2",
@@ -107,43 +105,36 @@ server <- function(input, output, session) {
   SAFFRON_result <- callModule(SAFFRONServer, id = "inputSAFFRON", data = in_data)
   callModule(SAFFRONcountServer, "SAFFRONcount", SAFFRON_result)
   callModule(SAFFRONplotServer, "SAFFRONplot", SAFFRON_result)
-  callModule(SAFFRONcompServer, "SAFFRONcomp", SAFFRON_result, data = in_data)
   
   #### ADDIS Sync ####
   ADDIS_result <- callModule(ADDISServer, id = "inputADDIS", data = in_data)
   callModule(ADDIScountServer, "ADDIScount", ADDIS_result)
   callModule(ADDISplotServer, "ADDISplot", ADDIS_result)
-  callModule(ADDIScompServer, "ADDIScomp", ADDIS_result, data = in_data)
   
   #### Alpha-Investing ####
   alphainvesting_result <- callModule(alphainvestingServer, id = "inputalphainvesting", data = in_data)
   callModule(alphainvestingcountServer, "alphainvestcount", alphainvesting_result)
   callModule(alphainvestingplotServer, "alphainvestplot", alphainvesting_result)
-  callModule(alphainvestingcompServer, "alphainvestcomp", alphainvesting_result, data = in_data)
   
   #### ADDIS Async ####
   ADDISa_result <- callModule(ADDISServer, id = "inputADDISa", data = in_data)
   callModule(ADDIScountServer, "ADDISacount", ADDIS_result)
   callModule(ADDISplotServer, "ADDISaplot", ADDIS_result)
-  callModule(ADDIScompServer, "ADDISacomp", ADDIS_result, data = in_data)
   
   #### LONDstar ####
   LONDSTAR_result <- callModule(LONDSTARServer, id = "inputLONDSTAR", data = in_data)
   callModule(LONDSTARcountServer, "LONDSTARcount", LONDSTAR_result)
   callModule(LONDSTARplotServer, "LONDSTARplot", LONDSTAR_result)
-  callModule(LONDSTARcompServer, "LONDSTARcomp", LONDSTAR_result, data = in_data)
   
   #### LORDstar ####
   LORDSTAR_result <- callModule(LORDSTARServer, id = "inputLORDSTAR", data = in_data)
   callModule(LORDSTARcountServer, "LORDSTARcount", LORDSTAR_result)
   callModule(LORDSTARplotServer, "LORDSTARplot", LORDSTAR_result)
-  callModule(LORDSTARcompServer, "LORDSTARcomp", LORDSTAR_result, data = in_data)
   
   #### SAFFRONstar ####
   SAFFRONSTAR_result <- callModule(SAFFRONSTARServer, id = "inputSAFFRONSTAR", data = in_data)
   callModule(SAFFRONSTARcountServer, "SAFFRONSTARcount", SAFFRONSTAR_result)
   callModule(SAFFRONSTARplotServer, "SAFFRONSTARplot", SAFFRONSTAR_result)
-  callModule(SAFFRONSTARcompServer, "SAFFRONSTARcomp", SAFFRONSTAR_result, data = in_data)
   
   #### get started page ####
   observe({

@@ -41,8 +41,6 @@ border-top-color:#ffffff;
                   shiny::tabPanel("Plot",
                                   placeholder2UI("inputLORDSTAR"),
                                   plotUI("LORDSTARplot")),
-                  shiny::tabPanel("Compare",
-                                  compareUI("LORDSTARcomp")),
                   shiny::tabPanel("Help", withMathJax(),
                                   HTML(markdown::markdownToHTML(knit("src/LORDstar_code.Rmd", quiet = T))))
                 ) ## close tabset panel

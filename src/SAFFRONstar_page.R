@@ -41,8 +41,6 @@ border-top-color:#ffffff;
                   shiny::tabPanel("Plot",
                                   placeholder2UI("inputSAFFRONSTAR"),
                                   plotUI("SAFFRONSTARplot")),
-                  shiny::tabPanel("Compare",
-                                  compareUI("SAFFRONSTARcomp")),
                   shiny::tabPanel("Help", withMathJax(),
                                   HTML(markdown::markdownToHTML(knit("src/SAFFRONstar_code.Rmd", quiet = T))))
                 ) ## close tabset panel
