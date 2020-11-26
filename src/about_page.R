@@ -43,6 +43,19 @@ fluidPage(
   fluidRow(
     bsplus::bs_accordion(id = "guide") %>%
       bs_set_opts(panel_type = "primary", use_heading_link = T) %>%
+      bs_append(title = "Other contributors", p(
+        "Aaditya Ramdas",
+        br(),
+        "Adel Javanmard",
+        br(),
+        "Andrea Montanari",
+        br(),
+        "Jinjin Tian",
+        br(),
+        "Tijana Zrnic",
+        br(),
+        "Natasha A. Karp"
+      )) %>%
       bs_append(title = "Package dependencies & credits", p(
         "shinyWidgets",
         br(),
