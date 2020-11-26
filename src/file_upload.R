@@ -14,6 +14,9 @@ fluidPage(
         img(src = "user-diagram.png"),
         br(),
         "For more information, check out the", a(href = "https://dsrobertson.github.io/onlineFDR/articles/onlineFDR.html", "Get Started"), "page in our vignette."))  %>%
+      bs_append(title = "How to upload your parameters", content = p(
+        "Because the stream app is designed to be used as your dataset grows, you should have a CSV file of your parameters such that you can reuse them any time you want to run your algorithm of choice. Your CSV file should have two columns named 'param' and 'value' and should, at a minimum, specify 'bound' in the 'param' column and the corresponding number of hypotheses you expect to test in the 'value' column. You can specify the other parameters, which have the same names as the arguments for your algorithm of choice (see Help) along with their corresponding values. If you do not specify values, default values will be used."
+      )) %>%
       bs_append(title = "Help & feedback", content = HTML("For additional help or to submit feedback or bug reports,
        please contact: <br>
        David Robertson <br>
