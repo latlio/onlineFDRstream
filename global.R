@@ -9,7 +9,7 @@
 rm(list = ls())
 
 #change file input
-options(shiny.maxRequestSize = 30*1024^2)
+options(shiny.maxRequestSize = 500*1024^2)
 
 # 1. Shiny ----
 library(shiny)

@@ -52,6 +52,7 @@ LONDServer <- function(input, output, session, data) {
     
     bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
     if(is.empty(bound)) {
+      bound <- NULL
       shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
     }
     
@@ -83,9 +84,14 @@ LONDServer <- function(input, output, session, data) {
     if(!is.null(data())){
       shiny::showModal(modalDialog("Calculating..."))
     }
+    if(is.null(bound)) {
+      betai <- NULL
+    } else {
+      betai <- setBound("LOND", N = bound)
+    }
     out <- LOND(d = data(),
                 alpha = alpha,
-                betai = setBound("LOND", N = bound),
+                betai = betai,
                 random = random,
                 original = original)
     shiny::removeModal()
@@ -359,6 +365,7 @@ LORDServer <- function(input, output, session, data) {
     
     bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
     if(is.empty(bound)) {
+      bound <- NULL
       shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
     }
     
@@ -404,11 +411,16 @@ LORDServer <- function(input, output, session, data) {
       shiny::showModal(modalDialog("Calculating..."))
     }
     
-    if(version == "dep") {
-      gammai <- setBound("LORDdep", N = bound, b0 = b0)
+    if(is.null(bound)) {
+      gammai <- NULL
     } else {
-      gammai <- setBound("LORD", N = bound)
+      if(version == "dep") {
+        gammai <- setBound("LORDdep", N = bound, b0 = b0)
+      } else {
+        gammai <- setBound("LORD", N = bound)
+      }
     }
+
     output <- LORD(d = data(),
                    alpha = alpha,
                    gammai = gammai,
@@ -682,6 +694,7 @@ SAFFRONServer <- function(input, output, session, data) {
     
     bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
     if(is.empty(bound)) {
+      bound <- NULL
       shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
     }
     
@@ -725,9 +738,14 @@ SAFFRONServer <- function(input, output, session, data) {
     if(!is.null(data())){
       shiny::showModal(modalDialog("Calculating..."))
     }
+    if(is.null(bound)) {
+      gammai <- NULL
+    } else {
+      gammai <- setBound("SAFFRON", N = bound)
+    }
     output <- SAFFRON(d = data(),
                       alpha = alpha,
-                      gammai = setBound("SAFFRON", N = bound),
+                      gammai = gammai,
                       w0 = w0,
                       lambda = lambda,
                       random = random,
@@ -998,6 +1016,7 @@ ADDISServer <- function(input, output, session, data) {
     
     bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
     if(is.empty(bound)) {
+      bound <- NULL
       shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
     }
     
@@ -1030,9 +1049,14 @@ ADDISServer <- function(input, output, session, data) {
     if(!is.null(data())){
       shiny::showModal(modalDialog("Calculating..."))
     }
+    if(is.null(bound)) {
+      gammai <- NULL
+    } else {
+      gammai <- setBound("ADDIS", N = bound)
+    }
     output <- ADDIS(d = data(),
                     alpha = alpha,
-                    gammai = setBound("ADDIS", N = bound),
+                    gammai = gammai,
                     w0 = w0,
                     lambda = lambda,
                     tau = tau,
@@ -1300,6 +1324,7 @@ ADDISaServer <- function(input, output, session, data) {
     
     bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
     if(is.empty(bound)) {
+      bound <- NULL
       shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
     }
     
@@ -1332,9 +1357,14 @@ ADDISaServer <- function(input, output, session, data) {
     if(!is.null(data())){
       shiny::showModal(modalDialog("Calculating..."))
     }
+    if(is.null(bound)) {
+      gammai <- NULL
+    } else {
+      gammai <- setBound("ADDIS", N = bound)
+    }
     output <- ADDIS(d = data(),
                     alpha = alpha,
-                    gammai = setBound("ADDIS", N = bound),
+                    gammai = gammai,
                     w0 = w0,
                     lambda = lambda,
                     tau = tau,
@@ -1402,6 +1432,7 @@ alphainvestingServer <- function(input, output, session, data) {
     
     bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
     if(is.empty(bound)) {
+      bound <- NULL
       shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
     }
     
@@ -1428,9 +1459,14 @@ alphainvestingServer <- function(input, output, session, data) {
     if(!is.null(data())){
       shiny::showModal(modalDialog("Calculating..."))
     }
+    if(is.null(bound)) {
+      gammai <- NULL
+    } else {
+      gammai <- setBound("Alpha_investing", N = bound)
+    }
     output <- Alpha_investing(d = data(),
                               alpha = alpha,
-                              gammai = setBound("Alpha_investing", N = bound),
+                              gammai = gammai,
                               w0 = w0,
                               random = random)
     shiny::removeModal()
@@ -1696,6 +1732,7 @@ LONDSTARServer <- function(input, output, session, data) {
     
     bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
     if(is.empty(bound)) {
+      bound <- NULL
       shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
     }
     
@@ -1716,10 +1753,15 @@ LONDSTARServer <- function(input, output, session, data) {
     if(!is.null(data())){
       shiny::showModal(modalDialog("Calculating..."))
     }
+    if(is.null(bound)) {
+      betai <- NULL
+    } else {
+      betai <- setBound("LONDstar", N = bound)
+    }
     output <- LONDstar(d = data(),
                        alpha = alpha,
                        version = version,
-                       betai = setBound("LONDstar", N = bound))
+                       betai = betai)
     shiny::removeModal()
     
     output
@@ -1924,6 +1966,7 @@ LORDSTARServer <- function(input, output, session, data) {
     
     bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
     if(is.empty(bound)) {
+      bound <- NULL
       shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
     }
     
@@ -1950,10 +1993,15 @@ LORDSTARServer <- function(input, output, session, data) {
     if(!is.null(data())){
       shiny::showModal(modalDialog("Calculating..."))
     }
+    if(is.null(bound)) {
+      gammai <- NULL
+    } else {
+      gammai <- setBound("LORDstar", N = bound)
+    }
     output <- LORDstar(d = data(),
                        alpha = alpha,
                        version = version,
-                       gammai = setBound("LORDstar", N = bound),
+                       gammai = gammai,
                        w0 = w0)
     shiny::removeModal()
     
@@ -2159,6 +2207,7 @@ SAFFRONSTARServer <- function(input, output, session, data) {
     
     bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
     if(is.empty(bound)) {
+      bound <- NULL
       shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
     }
     
@@ -2203,11 +2252,15 @@ SAFFRONSTARServer <- function(input, output, session, data) {
     if(!is.null(data())){
       shiny::showModal(modalDialog("Calculating..."))
     }
-    
+    if(is.null(bound)) {
+      gammai <- NULL
+    } else {
+      gammai <- setBound("SAFFRONstar", N = bound)
+    }
     output <- SAFFRONstar(pval = data(),
                           alpha = alpha,
                           version = version,
-                          gammai = setBound("SAFFRONstar", N = bound),
+                          gammai = gammai,
                           w0 = w0,
                           lambda = lambda,
                           discard = discard,
