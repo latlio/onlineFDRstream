@@ -50,6 +50,11 @@ LONDServer <- function(input, output, session, data) {
       shiny::showNotification("Missing alpha, using default value of 0.05", type = "warning")
     }
     
+    bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
+    if(is.empty(bound)) {
+      shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
+    }
+    
     dep = params() %>% filter(param == "dep") %>% pull(value) %>% as.logical()
     if(is.empty(dep)) {
       dep <- FALSE
@@ -80,6 +85,7 @@ LONDServer <- function(input, output, session, data) {
     }
     out <- LOND(d = data(),
                 alpha = alpha,
+                betai = setBound("LOND", N = bound),
                 random = random,
                 original = original)
     shiny::removeModal()
@@ -92,13 +98,13 @@ LONDServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else if(input$go > 0 && !is.data.frame(data)) {
-      shinyjs::show(id = "placeholder")
-      shinyjs::show(id = "placeholder2")
-    } 
-    else {
+    } else if(input$go > 0 && !is.null(data())) {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
+    } 
+    else {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
     }
   })
   
@@ -351,6 +357,11 @@ LORDServer <- function(input, output, session, data) {
       shiny::showNotification("Missing alpha, using default value of 0.05", type = "warning")
     }
     
+    bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
+    if(is.empty(bound)) {
+      shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
+    }
+    
     version = params() %>% filter(param == "version") %>% pull(value)
     if(is.empty(version)) {
       version <- "++"
@@ -392,8 +403,15 @@ LORDServer <- function(input, output, session, data) {
     if(!is.null(data())){
       shiny::showModal(modalDialog("Calculating..."))
     }
+    
+    if(version == "dep") {
+      gammai <- setBound("LORDdep", N = bound, b0 = b0)
+    } else {
+      gammai <- setBound("LORD", N = bound)
+    }
     output <- LORD(d = data(),
                    alpha = alpha,
+                   gammai = gammai,
                    version = version,
                    w0 = w0,
                    b0 = b0,
@@ -409,13 +427,13 @@ LORDServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else if(input$go > 0 && !is.data.frame(data)) {
-      shinyjs::show(id = "placeholder")
-      shinyjs::show(id = "placeholder2")
-    } 
-    else {
+    } else if(input$go > 0 && !is.null(data())) {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
+    } 
+    else {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
     }
   })
   
@@ -662,6 +680,11 @@ SAFFRONServer <- function(input, output, session, data) {
       shiny::showNotification("Missing alpha, using default value of 0.05", type = "warning")
     }
     
+    bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
+    if(is.empty(bound)) {
+      shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
+    }
+    
     w0 = params() %>% filter(param == "w0") %>% pull(value) %>% as.numeric()
     if(is.empty(w0)) {
       w0 <- 0.05/2
@@ -704,6 +727,7 @@ SAFFRONServer <- function(input, output, session, data) {
     }
     output <- SAFFRON(d = data(),
                       alpha = alpha,
+                      gammai = setBound("SAFFRON", N = bound),
                       w0 = w0,
                       lambda = lambda,
                       random = random,
@@ -719,13 +743,13 @@ SAFFRONServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else if(input$go > 0 && !is.data.frame(data)) {
-      shinyjs::show(id = "placeholder")
-      shinyjs::show(id = "placeholder2")
-    } 
-    else {
+    } else if(input$go > 0 && !is.null(data())) {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
+    } 
+    else {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
     }
   })
   
@@ -972,6 +996,11 @@ ADDISServer <- function(input, output, session, data) {
       shiny::showNotification("Missing alpha, using default value of 0.05", type = "warning")
     }
     
+    bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
+    if(is.empty(bound)) {
+      shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
+    }
+    
     w0 = params() %>% filter(param == "w0") %>% pull(value) %>% as.numeric()
     if(is.empty(w0)) {
       w0 <- 0.5*0.5*0.05/2
@@ -1003,6 +1032,7 @@ ADDISServer <- function(input, output, session, data) {
     }
     output <- ADDIS(d = data(),
                     alpha = alpha,
+                    gammai = setBound("ADDIS", N = bound),
                     w0 = w0,
                     lambda = lambda,
                     tau = tau,
@@ -1017,13 +1047,13 @@ ADDISServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else if(input$go > 0 && !is.data.frame(data)) {
-      shinyjs::show(id = "placeholder")
-      shinyjs::show(id = "placeholder2")
-    } 
-    else {
+    } else if(input$go > 0 && !is.null(data())) {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
+    } 
+    else {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
     }
   })
   
@@ -1268,6 +1298,11 @@ ADDISaServer <- function(input, output, session, data) {
       shiny::showNotification("Missing alpha, using default value of 0.05", type = "warning")
     }
     
+    bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
+    if(is.empty(bound)) {
+      shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
+    }
+    
     w0 = params() %>% filter(param == "w0") %>% pull(value) %>% as.numeric()
     if(is.empty(w0)) {
       w0 <- 0.5*0.5*0.05/2
@@ -1299,6 +1334,7 @@ ADDISaServer <- function(input, output, session, data) {
     }
     output <- ADDIS(d = data(),
                     alpha = alpha,
+                    gammai = setBound("ADDIS", N = bound),
                     w0 = w0,
                     lambda = lambda,
                     tau = tau,
@@ -1313,13 +1349,13 @@ ADDISaServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else if(input$go > 0 && !is.data.frame(data)) {
-      shinyjs::show(id = "placeholder")
-      shinyjs::show(id = "placeholder2")
-    } 
-    else {
+    } else if(input$go > 0 && !is.null(data())) {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
+    } 
+    else {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
     }
   })
   
@@ -1364,6 +1400,11 @@ alphainvestingServer <- function(input, output, session, data) {
       shiny::showNotification("Missing alpha, using default value of 0.05", type = "warning")
     }
     
+    bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
+    if(is.empty(bound)) {
+      shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
+    }
+    
     w0 = params() %>% filter(param == "w0") %>% pull(value) %>% as.numeric()
     if(is.empty(w0)) {
       w0 <- 0.05/2
@@ -1389,6 +1430,7 @@ alphainvestingServer <- function(input, output, session, data) {
     }
     output <- Alpha_investing(d = data(),
                               alpha = alpha,
+                              gammai = setBound("Alpha_investing", N = bound),
                               w0 = w0,
                               random = random)
     shiny::removeModal()
@@ -1401,13 +1443,13 @@ alphainvestingServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else if(input$go > 0 && !is.data.frame(data)) {
-      shinyjs::show(id = "placeholder")
-      shinyjs::show(id = "placeholder2")
-    } 
-    else {
+    } else if(input$go > 0 && !is.null(data())) {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
+    } 
+    else {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
     }
   })
   
@@ -1652,6 +1694,11 @@ LONDSTARServer <- function(input, output, session, data) {
       shiny::showNotification("Missing alpha, using default value of 0.05", type = "warning")
     }
     
+    bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
+    if(is.empty(bound)) {
+      shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
+    }
+    
     version = params() %>% filter(param == "version") %>% pull(value)
     if(is.empty(version)) {
       version <- "async"
@@ -1669,9 +1716,10 @@ LONDSTARServer <- function(input, output, session, data) {
     if(!is.null(data())){
       shiny::showModal(modalDialog("Calculating..."))
     }
-    output <- myLONDstar(d = data(),
-                         alpha = alpha,
-                         version = version)
+    output <- LONDstar(d = data(),
+                       alpha = alpha,
+                       version = version,
+                       betai = setBound("LONDstar", N = bound))
     shiny::removeModal()
     
     output
@@ -1682,13 +1730,13 @@ LONDSTARServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else if(input$go > 0 && !is.data.frame(data)) {
-      shinyjs::show(id = "placeholder")
-      shinyjs::show(id = "placeholder2")
-    } 
-    else {
+    } else if(input$go > 0 && !is.null(data())) {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
+    } 
+    else {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
     }
   })
   
@@ -1874,6 +1922,11 @@ LORDSTARServer <- function(input, output, session, data) {
       shiny::showNotification("Missing alpha, using default value of 0.05", type = "warning")
     }
     
+    bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
+    if(is.empty(bound)) {
+      shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
+    }
+    
     version = params() %>% filter(param == "version") %>% pull(value)
     if(is.empty(version)) {
       version <- "async"
@@ -1897,10 +1950,11 @@ LORDSTARServer <- function(input, output, session, data) {
     if(!is.null(data())){
       shiny::showModal(modalDialog("Calculating..."))
     }
-    output <- myLORDstar(d = data(),
-                         alpha = alpha,
-                         version = version,
-                         w0 = w0)
+    output <- LORDstar(d = data(),
+                       alpha = alpha,
+                       version = version,
+                       gammai = setBound("LORDstar", N = bound),
+                       w0 = w0)
     shiny::removeModal()
     
     output
@@ -1911,13 +1965,13 @@ LORDSTARServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else if(input$go > 0 && !is.data.frame(data)) {
-      shinyjs::show(id = "placeholder")
-      shinyjs::show(id = "placeholder2")
-    } 
-    else {
+    } else if(input$go > 0 && !is.null(data())) {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
+    } 
+    else {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
     }
   })
   
@@ -2103,6 +2157,11 @@ SAFFRONSTARServer <- function(input, output, session, data) {
       shiny::showNotification("Missing alpha, using default value of 0.05", type = "warning")
     }
     
+    bound = params() %>% filter(param == "bound") %>% pull(value) %>% as.numeric()
+    if(is.empty(bound)) {
+      shiny::showNotification("Missing bound, you need to set an upper limit for the number of hypotheses to be tested", type = "error")
+    }
+    
     version = params() %>% filter(param == "version") %>% pull(value)
     if(is.empty(version)) {
       version <- "async"
@@ -2145,9 +2204,10 @@ SAFFRONSTARServer <- function(input, output, session, data) {
       shiny::showModal(modalDialog("Calculating..."))
     }
     
-    output <- mySAFFRONstar(pval = data(),
+    output <- SAFFRONstar(pval = data(),
                           alpha = alpha,
                           version = version,
+                          gammai = setBound("SAFFRONstar", N = bound),
                           w0 = w0,
                           lambda = lambda,
                           discard = discard,
@@ -2162,13 +2222,13 @@ SAFFRONSTARServer <- function(input, output, session, data) {
     if(input$go == 0){
       shinyjs::show(id = "placeholder")
       shinyjs::show(id = "placeholder2")
-    } else if(input$go > 0 && !is.data.frame(data)) {
-      shinyjs::show(id = "placeholder")
-      shinyjs::show(id = "placeholder2")
-    } 
-    else {
+    } else if(input$go > 0 && !is.null(data())) {
       shinyjs::hide(id = "placeholder")
       shinyjs::hide(id = "placeholder2")
+    } 
+    else {
+      shinyjs::show(id = "placeholder")
+      shinyjs::show(id = "placeholder2")
     }
   })
   
