@@ -15,7 +15,12 @@ fluidPage(
         br(),
         "For more information, check out the", a(href = "https://dsrobertson.github.io/onlineFDR/articles/onlineFDR.html", "Get Started"), "page in our vignette."))  %>%
       bs_append(title = "How to upload your parameters", content = p(
-        "Because the stream app is designed to be used as your dataset grows, you should have a CSV file of your parameters such that you can reuse them any time you want to run your algorithm of choice. Your CSV file should have two columns named 'param' and 'value' and should, at a minimum, specify 'bound' in the 'param' column and the corresponding number of hypotheses you expect to test in the 'value' column. You can specify the other parameters, which have the same names as the arguments for your algorithm of choice (see Help) along with their corresponding values. If you do not specify values, default values will be used."
+        "Because the stream app is designed to be used as your dataset grows, you should have a CSV file of your parameters such that you can reuse them any time you want to run your algorithm of choice. Your CSV file should have two columns named 'param' and 'value'. You can specify all of your parameters, as in Example A. Bound represents the number of hypotheses you expect to test and corresponds to the betai/gammai argument in the algorithms. Not specfiying a bound will run the default unbounded procedure. You can specify no other parameter except your bound value, as in Example B, and default parameters will be used for your algorithm of choice (see Help). You can selectively specify certain parameters, as in Example C. If you do not specify a seed, a default seed value of 1 is used. Ensure that your params are spelled exactly as the arguments for your algorithm of choice (see Help).",
+        img(src = "param-diagram.png")
+      )) %>%
+      bs_append(title = "Synchronous vs Asynchronous", content = p(
+        "Synchronous algorithms are designed to be used for a sequence of tests in which each test can only start when the previous test has finished. Asynchronous algorithms are designed to be used when tests overlap in time. The asynchronous setting may be more realistic since tests are often performed to overlap to gain time efficiency and because of difficulties of coordination in a large-scale, decentralized setting.",
+        img(src = "sync-diagram.png")
       )) %>%
       bs_append(title = "Help & feedback", content = HTML("For additional help or to submit feedback or bug reports,
        please contact: <br>
