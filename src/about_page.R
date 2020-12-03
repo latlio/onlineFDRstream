@@ -41,7 +41,7 @@ fluidPage(
     ) #close column
   ), #close fluidrow
   fluidRow(
-    bsplus::bs_accordion(id = "guide") %>%
+    bsplus::bs_accordion(id = "about") %>%
       bs_set_opts(panel_type = "primary", use_heading_link = T) %>%
       bs_append(title = "Other contributors", p(
         "Aaditya Ramdas",
