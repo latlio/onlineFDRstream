@@ -42,7 +42,7 @@ fluidPage(
     div(
       id = "novice",
       fluidRow(
-        h1("Which algorithm do I use?"),
+        h1("Which synchronous algorithm do I use?"),
         "Use the following demo to inform which algorithm is most appropriate to use.
     Pick a sample size that is closest to the size of your data and a proportion of expected non-null
     hypotheses. Text will populate that reports which algorithm will have the highest power given

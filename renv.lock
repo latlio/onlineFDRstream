@@ -361,10 +361,10 @@
     },
     "isoband": {
       "Package": "isoband",
-      "Version": "0.2.2",
+      "Version": "0.2.3",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "6e58bd3d6b3dd82a944cd6f05ade228f"
+      "Hash": "53647fb507373700028b2ce6cd30751a"
     },
     "jsonlite": {
       "Package": "jsonlite",
@@ -480,8 +480,8 @@
       "RemoteRepo": "onlineFDR",
       "RemoteUsername": "dsrobertson",
       "RemoteRef": "HEAD",
-      "RemoteSha": "db2228fb8264d45643a2f59ed63498a193e7fde2",
-      "Hash": "e26663f517512138b84c9efd3230efee"
+      "RemoteSha": "f5243b2ab56e63036cb892fbb0c5fb061e06145b",
+      "Hash": "bd93fb47bff61dceff272c5c373bd400"
     },
     "openssl": {
       "Package": "openssl",
@@ -548,10 +548,10 @@
     },
     "processx": {
       "Package": "processx",
-      "Version": "3.4.4",
+      "Version": "3.4.5",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "03446ed0b8129916f73676726cb3c48f"
+      "Hash": "22aab6098cb14edd0a5973a8438b569b"
     },
     "progress": {
       "Package": "progress",
@@ -625,10 +625,10 @@
     },
     "rlang": {
       "Package": "rlang",
-      "Version": "0.4.8",
+      "Version": "0.4.9",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "843a6af51414bce7f8a8e372f11d6cd0"
+      "Hash": "9d7aba7bed9a79e2403b4777428a2b12"
     },
     "rmarkdown": {
       "Package": "rmarkdown",

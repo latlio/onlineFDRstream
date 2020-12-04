@@ -1784,15 +1784,9 @@ LONDSTARServer <- function(input, output, session, data) {
   
   # output no data loaded error message
   observeEvent(input$go, {
-    if(!is.data.frame(data)) {
-      shiny::showNotification("Please upload a dataset first!", type = "err")
-    }
-  })
-  # Output error messages
-  observeEvent(input$go, {
     if(!is.null(data())){
       tryCatch({
-        LONDres()
+        LONDSTARres()
       },
       error = function(err){
         shiny::showNotification(paste0(err), type = "err")
@@ -1846,13 +1840,28 @@ LONDSTARtableServer <- function(input, output, session, LONDSTARresult) {
 }
 
 LONDSTARcountServer <- function(input, output, session, LONDSTARresult) {
-  output$count <- renderUI({
+  ns <- session$ns
+  #toggle download button
+  observe({
+    toggle(id = "downloadbutton")
+    # shinyanimate::startAnim(session, "downloadbutton", "fadeInDown")
+  })
+  
+  output$count <- renderUI({  
+    
     data <- LONDSTARresult$LONDSTARres()
     if(sum(data$R) == 1) {
       div(
-        id = "test",
         set_html_breaks(10),
-        paste0("1 null hypothesis was rejected"),
+        paste0("1 null hypothesis was rejected. See full results by downloading below"),
+        set_html_breaks(2),
+        shinyWidgets::downloadBttn(
+          outputId = ns("download"),
+          label = "Download results",
+          style = "fill",
+          color = "primary",
+          size = "sm"
+        ),
         style = "text-align: center;
     vertical-align: middle;
     font-family: Poppins, sans-serif;
@@ -1860,16 +1869,36 @@ LONDSTARcountServer <- function(input, output, session, LONDSTARresult) {
       )
     } else {
       div(
-        id = "test2",
         set_html_breaks(10),
-        paste0(sum(data$R), " null hypotheses were rejected"),
+        paste0(sum(data$R), " null hypotheses were rejected. See full results by downloading below"),
+        set_html_breaks(2),
+        shinyWidgets::downloadBttn(
+          outputId = ns("download"),
+          label = "Download results",
+          style = "fill",
+          color = "primary",
+          size = "sm"
+        ),
         style = "text-align: center;
-    vertical-align: middle;
-    font-family: Poppins, sans-serif;
-    font-size: 18px"
+        vertical-align: middle;
+        font-family: Poppins, sans-serif;
+        font-size: 18px;
+        .shiny-download-link{
+        width: 250px;
+        }
+        "
       )
     }
   })
+  
+  output$download <- downloadHandler(
+    filename = function() {
+      paste("LONDSTAR-", Sys.Date(), ".csv", sep = "")
+    },
+    content = function(file) {
+      write_csv(LONDSTARresult$LONDSTARres(), file)
+    }
+  )
 }
 
 LONDSTARplotServer <- function(input, output, session, LONDSTARresult) {
@@ -2025,15 +2054,9 @@ LORDSTARServer <- function(input, output, session, data) {
   
   # output no data loaded error message
   observeEvent(input$go, {
-    if(!is.data.frame(data)) {
-      shiny::showNotification("Please upload a dataset first!", type = "err")
-    }
-  })
-  # Output error messages
-  observeEvent(input$go, {
     if(!is.null(data())){
       tryCatch({
-        LONDres()
+        LORDSTARres()
       },
       error = function(err){
         shiny::showNotification(paste0(err), type = "err")
@@ -2087,13 +2110,28 @@ LORDSTARtableServer <- function(input, output, session, LORDSTARresult) {
 }
 
 LORDSTARcountServer <- function(input, output, session, LORDSTARresult) {
-  output$count <- renderUI({
+  ns <- session$ns
+  #toggle download button
+  observe({
+    toggle(id = "downloadbutton")
+    # shinyanimate::startAnim(session, "downloadbutton", "fadeInDown")
+  })
+  
+  output$count <- renderUI({  
+    
     data <- LORDSTARresult$LORDSTARres()
     if(sum(data$R) == 1) {
       div(
-        id = "test",
         set_html_breaks(10),
-        paste0("1 null hypothesis was rejected"),
+        paste0("1 null hypothesis was rejected. See full results by downloading below"),
+        set_html_breaks(2),
+        shinyWidgets::downloadBttn(
+          outputId = ns("download"),
+          label = "Download results",
+          style = "fill",
+          color = "primary",
+          size = "sm"
+        ),
         style = "text-align: center;
     vertical-align: middle;
     font-family: Poppins, sans-serif;
@@ -2101,16 +2139,36 @@ LORDSTARcountServer <- function(input, output, session, LORDSTARresult) {
       )
     } else {
       div(
-        id = "test2",
         set_html_breaks(10),
-        paste0(sum(data$R), " null hypotheses were rejected"),
+        paste0(sum(data$R), " null hypotheses were rejected. See full results by downloading below"),
+        set_html_breaks(2),
+        shinyWidgets::downloadBttn(
+          outputId = ns("download"),
+          label = "Download results",
+          style = "fill",
+          color = "primary",
+          size = "sm"
+        ),
         style = "text-align: center;
-    vertical-align: middle;
-    font-family: Poppins, sans-serif;
-    font-size: 18px"
+        vertical-align: middle;
+        font-family: Poppins, sans-serif;
+        font-size: 18px;
+        .shiny-download-link{
+        width: 250px;
+        }
+        "
       )
     }
   })
+  
+  output$download <- downloadHandler(
+    filename = function() {
+      paste("LORDSTAR-", Sys.Date(), ".csv", sep = "")
+    },
+    content = function(file) {
+      write_csv(LORDSTARresult$LORDSTARres(), file)
+    }
+  )
 }
 
 LORDSTARplotServer <- function(input, output, session, LORDSTARresult) {
@@ -2257,7 +2315,7 @@ SAFFRONSTARServer <- function(input, output, session, data) {
     } else {
       gammai <- setBound("SAFFRONstar", N = bound)
     }
-    output <- SAFFRONstar(pval = data(),
+    output <- SAFFRONstar(d = data(),
                           alpha = alpha,
                           version = version,
                           gammai = gammai,
@@ -2287,15 +2345,9 @@ SAFFRONSTARServer <- function(input, output, session, data) {
   
   # output no data loaded error message
   observeEvent(input$go, {
-    if(!is.data.frame(data)) {
-      shiny::showNotification("Please upload a dataset first!", type = "err")
-    }
-  })
-  # Output error messages
-  observeEvent(input$go, {
     if(!is.null(data())){
       tryCatch({
-        LONDres()
+        SAFFRONSTARres()
       },
       error = function(err){
         shiny::showNotification(paste0(err), type = "err")
@@ -2349,13 +2401,28 @@ SAFFRONSTARtableServer <- function(input, output, session, SAFFRONSTARresult) {
 }
 
 SAFFRONSTARcountServer <- function(input, output, session, SAFFRONSTARresult) {
-  output$count <- renderUI({
+  ns <- session$ns
+  #toggle download button
+  observe({
+    toggle(id = "downloadbutton")
+    # shinyanimate::startAnim(session, "downloadbutton", "fadeInDown")
+  })
+  
+  output$count <- renderUI({  
+    
     data <- SAFFRONSTARresult$SAFFRONSTARres()
     if(sum(data$R) == 1) {
       div(
-        id = "test",
         set_html_breaks(10),
-        paste0("1 null hypothesis was rejected"),
+        paste0("1 null hypothesis was rejected. See full results by downloading below"),
+        set_html_breaks(2),
+        shinyWidgets::downloadBttn(
+          outputId = ns("download"),
+          label = "Download results",
+          style = "fill",
+          color = "primary",
+          size = "sm"
+        ),
         style = "text-align: center;
     vertical-align: middle;
     font-family: Poppins, sans-serif;
@@ -2363,16 +2430,36 @@ SAFFRONSTARcountServer <- function(input, output, session, SAFFRONSTARresult) {
       )
     } else {
       div(
-        id = "test2",
         set_html_breaks(10),
-        paste0(sum(data$R), " null hypotheses were rejected"),
+        paste0(sum(data$R), " null hypotheses were rejected. See full results by downloading below"),
+        set_html_breaks(2),
+        shinyWidgets::downloadBttn(
+          outputId = ns("download"),
+          label = "Download results",
+          style = "fill",
+          color = "primary",
+          size = "sm"
+        ),
         style = "text-align: center;
-    vertical-align: middle;
-    font-family: Poppins, sans-serif;
-    font-size: 18px"
+        vertical-align: middle;
+        font-family: Poppins, sans-serif;
+        font-size: 18px;
+        .shiny-download-link{
+        width: 250px;
+        }
+        "
       )
     }
   })
+  
+  output$download <- downloadHandler(
+    filename = function() {
+      paste("SAFFRONSTAR-", Sys.Date(), ".csv", sep = "")
+    },
+    content = function(file) {
+      write_csv(SAFFRONSTARresult$SAFFRONSTARres(), file)
+    }
+  )
 }
 
 SAFFRONSTARplotServer <- function(input, output, session, SAFFRONSTARresult) {
