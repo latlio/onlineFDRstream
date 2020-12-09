@@ -316,6 +316,10 @@ LONDcompServer <- function(input, output, session, LONDresult, data) {
     out <- select_alg(alg = input$alg, data = data())
   })
   
+  selected_alg_to_display <- eventReactive(input$compare, {
+    out <- input$alg
+  })
+  
   output$compnum <- renderUI({
     if(!is.null(select_alg_data())) {
       select_alg_data <- select_alg_data()
@@ -326,7 +330,13 @@ LONDcompServer <- function(input, output, session, LONDresult, data) {
           paste0("LOND rejected ", sum(current_alg_data$R), " null hypotheses.")
         ),
         p(
-          paste0(input$alg, " rejected ", sum(select_alg_data$R), " null hypotheses.")
+          paste0(selected_alg_to_display(), " rejected ", sum(select_alg_data$R), " null hypotheses.")
+        ),
+        p(
+          paste0("Bonferroni rejected ", sum(current_alg_data$pval <= 0.05/length(current_alg_data$pval)), " null hypotheses.")
+        ),
+        p(
+          paste0("No adjustment rejected ", sum(current_alg_data$pval <= 0.05), " null hypotheses.")
         ),
         style = "text-align: center;
     vertical-align: middle;
@@ -602,7 +612,7 @@ LORDcompServer <- function(input, output, session, LORDresult, data) {
   select_alg <- function(alg, data) {
     switch(alg,
            LOND = LOND(data),
-           LORD2 = LORD(data),
+           LORD = LORD(data),
            LORD3 = LORD(data, version = 3),
            LORDdiscard = LORD(data, version = "discard"),
            LORDdep = LORD(data, version = "dep"),
@@ -651,6 +661,10 @@ LORDcompServer <- function(input, output, session, LORDresult, data) {
     out <- select_alg(alg = input$alg, data = data())
   })
   
+  selected_alg_to_display <- eventReactive(input$compare, {
+    out <- input$alg
+  })
+  
   output$compnum <- renderUI({
     if(!is.null(select_alg_data())) {
       select_alg_data <- select_alg_data()
@@ -661,7 +675,13 @@ LORDcompServer <- function(input, output, session, LORDresult, data) {
           paste0("LORD rejected ", sum(current_alg_data$R), " null hypotheses.")
         ),
         p(
-          paste0(input$alg, " rejected ", sum(select_alg_data$R), " null hypotheses.")
+          paste0(selected_alg_to_display(), " rejected ", sum(select_alg_data$R), " null hypotheses.")
+        ),
+        p(
+          paste0("Bonferroni rejected ", sum(current_alg_data$pval <= 0.05/length(current_alg_data$pval)), " null hypotheses.")
+        ),
+        p(
+          paste0("No adjustment rejected ", sum(current_alg_data$pval <= 0.05), " null hypotheses.")
         ),
         style = "text-align: center;
     vertical-align: middle;
@@ -924,7 +944,7 @@ SAFFRONcompServer <- function(input, output, session, SAFFRONresult, data) {
   select_alg <- function(alg, data) {
     switch(alg,
            LOND = LOND(data),
-           LORD2 = LORD(data),
+           LORD = LORD(data),
            LORD3 = LORD(data, version = 3),
            LORDdiscard = LORD(data, version = "discard"),
            LORDdep = LORD(data, version = "dep"),
@@ -973,6 +993,10 @@ SAFFRONcompServer <- function(input, output, session, SAFFRONresult, data) {
     out <- select_alg(alg = input$alg, data = data())
   })
   
+  selected_alg_to_display <- eventReactive(input$compare, {
+    out <- input$alg
+  })
+  
   output$compnum <- renderUI({
     if(!is.null(select_alg_data())) {
       select_alg_data <- select_alg_data()
@@ -983,7 +1007,13 @@ SAFFRONcompServer <- function(input, output, session, SAFFRONresult, data) {
           paste0("SAFFRON rejected ", sum(current_alg_data$R), " null hypotheses.")
         ),
         p(
-          paste0(input$alg, " rejected ", sum(select_alg_data$R), " null hypotheses.")
+          paste0(selected_alg_to_display(), " rejected ", sum(select_alg_data$R), " null hypotheses.")
+        ),
+        p(
+          paste0("Bonferroni rejected ", sum(current_alg_data$pval <= 0.05/length(current_alg_data$pval)), " null hypotheses.")
+        ),
+        p(
+          paste0("No adjustment rejected ", sum(current_alg_data$pval <= 0.05), " null hypotheses.")
         ),
         style = "text-align: center;
     vertical-align: middle;
@@ -1232,7 +1262,7 @@ ADDIScompServer <- function(input, output, session, ADDISresult, data) {
   select_alg <- function(alg, data) {
     switch(alg,
            LOND = LOND(data),
-           LORD2 = LORD(data),
+           LORD = LORD(data),
            LORD3 = LORD(data, version = 3),
            LORDdiscard = LORD(data, version = "discard"),
            LORDdep = LORD(data, version = "dep"),
@@ -1281,6 +1311,10 @@ ADDIScompServer <- function(input, output, session, ADDISresult, data) {
     out <- select_alg(alg = input$alg, data = data())
   })
   
+  selected_alg_to_display <- eventReactive(input$compare, {
+    out <- input$alg
+  })
+  
   output$compnum <- renderUI({
     if(!is.null(select_alg_data())) {
       select_alg_data <- select_alg_data()
@@ -1291,7 +1325,13 @@ ADDIScompServer <- function(input, output, session, ADDISresult, data) {
           paste0("ADDIS rejected ", sum(current_alg_data$R), " null hypotheses.")
         ),
         p(
-          paste0(input$alg, " rejected ", sum(select_alg_data$R), " null hypotheses.")
+          paste0(selected_alg_to_display(), " rejected ", sum(select_alg_data$R), " null hypotheses.")
+        ),
+        p(
+          paste0("Bonferroni rejected ", sum(current_alg_data$pval <= 0.05/length(current_alg_data$pval)), " null hypotheses.")
+        ),
+        p(
+          paste0("No adjustment rejected ", sum(current_alg_data$pval <= 0.05), " null hypotheses.")
         ),
         style = "text-align: center;
     vertical-align: middle;
@@ -1640,7 +1680,7 @@ alphainvestingcompServer <- function(input, output, session, alphainvestingresul
   select_alg <- function(alg, data) {
     switch(alg,
            LOND = LOND(data),
-           LORD2 = LORD(data),
+           LORD = LORD(data),
            LORD3 = LORD(data, version = 3),
            LORDdiscard = LORD(data, version = "discard"),
            LORDdep = LORD(data, version = "dep"),
@@ -1689,6 +1729,10 @@ alphainvestingcompServer <- function(input, output, session, alphainvestingresul
     out <- select_alg(alg = input$alg, data = data())
   })
   
+  selected_alg_to_display <- eventReactive(input$compare, {
+    out <- input$alg
+  })
+  
   output$compnum <- renderUI({
     if(!is.null(select_alg_data())) {
       select_alg_data <- select_alg_data()
@@ -1699,7 +1743,13 @@ alphainvestingcompServer <- function(input, output, session, alphainvestingresul
           paste0("Alpha Investing rejected ", sum(current_alg_data$R), " null hypotheses.")
         ),
         p(
-          paste0(input$alg, " rejected ", sum(select_alg_data$R), " null hypotheses.")
+          paste0(selected_alg_to_display(), " rejected ", sum(select_alg_data$R), " null hypotheses.")
+        ),
+        p(
+          paste0("Bonferroni rejected ", sum(current_alg_data$pval <= 0.05/length(current_alg_data$pval)), " null hypotheses.")
+        ),
+        p(
+          paste0("No adjustment rejected ", sum(current_alg_data$pval <= 0.05), " null hypotheses.")
         ),
         style = "text-align: center;
     vertical-align: middle;
@@ -1928,7 +1978,7 @@ LONDSTARcompServer <- function(input, output, session, LONDSTARresult, data) {
   select_alg <- function(alg, data) {
     switch(alg,
            LOND = LOND(data),
-           LORD2 = LORD(data),
+           LORD = LORD(data),
            LORD3 = LORD(data, version = 3),
            LORDdiscard = LORD(data, version = "discard"),
            LORDdep = LORD(data, version = "dep"),
@@ -2198,7 +2248,7 @@ LORDSTARcompServer <- function(input, output, session, LORDSTARresult, data) {
   select_alg <- function(alg, data) {
     switch(alg,
            LOND = LOND(data),
-           LORD2 = LORD(data),
+           LORD = LORD(data),
            LORD3 = LORD(data, version = 3),
            LORDdiscard = LORD(data, version = "discard"),
            LORDdep = LORD(data, version = "dep"),
@@ -2489,7 +2539,7 @@ SAFFRONSTARcompServer <- function(input, output, session, SAFFRONSTARresult, dat
   select_alg <- function(alg, data) {
     switch(alg,
            LOND = LOND(data),
-           LORD2 = LORD(data),
+           LORD = LORD(data),
            LORD3 = LORD(data, version = 3),
            LORDdiscard = LORD(data, version = "discard"),
            LORDdep = LORD(data, version = "dep"),

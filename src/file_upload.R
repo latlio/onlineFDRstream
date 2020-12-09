@@ -51,7 +51,7 @@ fluidPage(
         br(),
         br(),
         column(4,
-               strong("Sample size"),
+               strong("Number of p-values"),
                shinyWidgets::radioGroupButtons("size", NULL, c(50, 100, 1000))
         ),
         column(4,
